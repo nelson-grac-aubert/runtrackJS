@@ -3,7 +3,7 @@ function keyListener() {
     const keyLogger = document.getElementById("keylogger");
 
     // chaine regex, ^ début, $ fin, i case insensitive, .test méthode
-    // d'un objet regex qui renvoie true si l'argument correspond
+    // d'un objet regex qui renvoie true si l'argument correspond à l'expression
     if (/^[a-z]$/i.test(event.key)) {
 
         keyLogger.value += event.key
