@@ -1,13 +1,12 @@
 $(document).ready(function(){
   
     $("#input-zone").focus(function() {
-        $(this).css("height", "50px");
-        $(this).css("width", "200px");
+        $(this).animate({width: '+=1300px'},8000)
     });
 
     $("#input-zone").blur(function() {
-        $(this).css("height", "20px");
-        $(this).css("width", "80px");
+        $(this).animate({width: '-=1300px'},8000)
     });
 
 });
+
