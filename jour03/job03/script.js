@@ -15,6 +15,8 @@ $(function () {
 
     $("#reset-button").on("click", function () {
         randomize();
+        $("#win-message".remove()); 
+
     });
 });
 
@@ -61,4 +63,50 @@ function swapCells(a, b) {
     a.before(temp);
     b.before(a);
     temp.replaceWith(b);
+
+    checkWin(); 
+}
+
+function checkWin() {
+
+    const cells = $("#images-container .cell");
+    let correct = true;
+
+    cells.each(function (index) {
+
+        // Last cell must be empty
+        if (index === 8) {
+            if (!$(this).hasClass("empty")) {
+                correct = false;
+            }
+            return;
+        }
+
+        // Each cell has index matching logo (+1 because 0-8 / 1-9)
+        const expectedId = "logo-" + (index + 1);
+
+        if ($(this).attr("id") !== expectedId) {
+            correct = false;
+        }
+    });
+
+    if (correct) {
+        showWinMessage();
+        blockGame();
+    }
+}
+
+function showWinMessage() {
+    $("<div id='win-message'>Vous avez gagné</div>")
+        .css({
+            color: "green",
+            fontSize: "24px",
+            marginTop: "20px",
+            fontWeight: "bold"
+        })
+        .appendTo("body");
+}
+
+function blockGame() {
+    $("#images-container").off("click");
 }
