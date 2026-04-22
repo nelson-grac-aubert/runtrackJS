@@ -38,5 +38,3 @@ function randomize() {
 //     return choice;
 // }
 
-
-
