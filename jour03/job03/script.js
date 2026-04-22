@@ -1,40 +1,64 @@
-$(function () { 
+$(function () {
 
-    randomize(); 
+    randomize();
 
-    // Clicking on Reset button randomizes the grid again 
+    // Move cell if empty is adjascent
+    $("#images-container").on("click", ".cell:not(.empty)", function () {
+
+        const empty = $(".empty");
+        const clicked = $(this);
+
+        if (areAdjacent(clicked, empty)) {
+            swapCells(clicked, empty);
+        }
+    });
+
     $("#reset-button").on("click", function () {
         randomize();
     });
-
 });
 
+
+// Shuffle cells but keep one empty 
 function randomize() {
 
-    const imagesContainer = $("#images-container");
-    // Add all images to an array
-    const items = imagesContainer.children(".cell").toArray();
+    const container = $("#images-container");
+    const cells = container.children(".cell").not(".empty").toArray();
 
-    // Shuffle cheat : Math.random() returns a number between 0 and 1. 
-    // By substracting 0.5 => 50% chance of positive, 50% chance of negative 
-    // So 50% chance of keeping the order, 50% of inverting the sort 
-    items.sort(() => Math.random() - 0.5);
+    // Shuffle
+    cells.sort(() => Math.random() - 0.5);
 
-    // Put the cells of the array back into the div 
-    imagesContainer.empty().append(items);
+    // Reinject after shuffle
+    container.empty().append(cells);
 
-    const lastCell = $(`#logo-${9}`);
-    lastCell.remove(); 
-
+    // Add empty in the end 
+    container.append(`<div class="cell empty" id="empty"></div>`);
 }
 
-// DEPRECATED : I ALWAYS DELETE THE LAST CELL INSTEAD OF ONE AT RANDOM BECAUSE FUCK THIS SHITTTTTt
-// Helper function to delete a cell at random
-// function getRandomCellPosition() {
-//     const positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]; 
 
-//     var choice = positions[Math.floor(Math.random() * positions.length)];
+// Check if two cells are adjascent 
+function areAdjacent(a, b) {
 
-//     return choice;
-// }
+    const indexA = a.index();
+    const indexB = b.index();
 
+    const rowA = Math.floor(indexA / 3);
+    const colA = indexA % 3;
+
+    const rowB = Math.floor(indexB / 3);
+    const colB = indexB % 3;
+
+    const distance = Math.abs(rowA - rowB) + Math.abs(colA - colB);
+
+    return distance === 1; 
+}
+
+
+// Swap 2 cells in the DOM 
+function swapCells(a, b) {
+
+    const temp = $("<div>");
+    a.before(temp);
+    b.before(a);
+    temp.replaceWith(b);
+}
