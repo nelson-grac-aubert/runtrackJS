@@ -2,7 +2,10 @@ $(function () {
 
     randomize(); 
 
-    removeOneCellAtRandom(); 
+    // Clicking on Reset button randomizes the grid again 
+    $("#reset-button").on("click", function () {
+        randomize();
+    });
 
 });
 
@@ -20,11 +23,20 @@ function randomize() {
     // Put the cells of the array back into the div 
     imagesContainer.empty().append(items);
 
-}
-
-// Remove one of the 9 cells at random to get an empty space to play on 
-function removeOneCellAtRandom() { 
-
+    const lastCell = $(`#logo-${9}`);
+    lastCell.remove(); 
 
 }
+
+// DEPRECATED : I ALWAYS DELETE THE LAST CELL INSTEAD OF ONE AT RANDOM BECAUSE FUCK THIS SHITTTTTt
+// Helper function to delete a cell at random
+// function getRandomCellPosition() {
+//     const positions = [1, 2, 3, 4, 5, 6, 7, 8, 9]; 
+
+//     var choice = positions[Math.floor(Math.random() * positions.length)];
+
+//     return choice;
+// }
+
+
 
