@@ -1,0 +1,17 @@
+#images-container {
+
+    width : 310px;
+    height : 310px;
+    display : grid; 
+    gap : 5px;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 20px;
+
+    border-style : solid;
+
+}
+
+.picture, .cell { 
+    height : 100px; 
+    width : 100px; 
+}
