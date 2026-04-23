@@ -16,8 +16,13 @@
 }
 
 #results-container { 
-    margin-left : 10px;  
-    width : 50vw; 
-    height : 50vh; 
-    border-style : solid
+    padding : 5px; 
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 10px;  
+    width: 70vw; 
+    height: 70vh; 
+    border: solid;
+    overflow: auto; /* sécurité */
 }

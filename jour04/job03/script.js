@@ -1,76 +1,102 @@
-// FILTER BY TYPE 
-
-// Get the type from the fat ass menu déroulant
-function getTypeFromSelectForm() { 
-
-    var selectedPokemonType = $('#type-select option:selected').text();
-    // Debug print
-    console.log("Selected type from menu déroulant : " + selectedPokemonType);
-
-    return selectedPokemonType;
-
+// Access all json data 
+async function loadData() {
+    try { 
+        let response = await fetch("pokemon.json");
+        let data = await response.json();
+        return data; 
+    }
+    catch { 
+        console.error("Error accessing the json file");
+        return [];
+    }
 }
 
-function applyTypeFilter() { 
+// FILTER BY TYPE 
+// Get the type from the fat ass menu déroulant
+function getTypeFromSelectForm() { 
+    var selectedPokemonType = $('#type-select option:selected').text().trim();
+    console.log("Selected type from menu déroulant : " + selectedPokemonType);
+    return selectedPokemonType;
+}
 
+function applyTypeFilter(data) { 
+    // Keep all if "All" is selected
+    let type = getTypeFromSelectForm();
+    if (type === "All" || type === "" || type === "--Chose type--") return data;
+
+    // Keep Pokémon matching the selected type
+    return data.filter(p => p.type.includes(type));
 }
 
 // FILTER BY NAME 
 function getNameFromTextArea() { 
-
-    var inputName = $('#pokemon-name-input-zone').val();
-    // Debug print
+    var inputName = $('#pokemon-name-input-zone').val().trim().toLowerCase();
     console.log("Searched name from input zone : " + inputName);
-
     return inputName;
-
 }
 
-function applyNameFilter() { 
+function applyNameFilter(data) { 
+    // Keep all if no name typed
+    let name = getNameFromTextArea();
+    if (name === "") return data;
 
-
+    // Keep Pokémon whose english name contains the input
+    return data.filter(p => p.name.english.toLowerCase().includes(name));
 }
 
 // Filter by ID 
 function getIdFromTextArea() { 
-
-    var inputId = $('#pokemon-id-input-zone').val();
-    // Debug print
+    var inputId = $('#pokemon-id-input-zone').val().trim();
     console.log("Searched ID from input zone : " + inputId);
-
     return inputId;
-
 }
 
-function applyIdFilter() { 
+function applyIdFilter(data) { 
+    // Keep all if no ID typed
+    let id = getIdFromTextArea();
+    if (id === "") return data;
 
-    
+    // Keep Pokémon with matching ID
+    return data.filter(p => p.id == id);
 }
 
-// Apply Filters to parse the Json 
-function applyAllFilters() { 
+function appendTheResultsIntoTheBlackBox(data) { 
 
-    // Return a list of strings that are the pokemon names 
+    if (data.length === 0) {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = "Aucun résultat trouvé.";
+        document.querySelector("#results-container").appendChild(paragraph);
+        return;
+    }
 
-}
+    // Get a list of only the english names of the final filtered array 
+    let justTheEnglishNames = data.map(p => p.name.english);
 
-function appendTheResultsIntoTheBlackBox(listOfPokemonNames) { 
-
-    // Manipulate the DOM to add <spans> with the pokemon names matching the search 
+    // Append each name into the results container
+    justTheEnglishNames.forEach(name => {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = name;
+        document.querySelector("#results-container").appendChild(paragraph);
+    });
 }
 
 function clear() { 
-
-    // Remove all elements from the results container, call this function before all else in the button behavior 
-
+    // Remove all elements from the results container
+    $("#results-container").empty();
 }
 
-$("#apply-filter-button").on("click", function () { 
+$("#apply-filter-button").on("click", async function () { 
     
-    // DEBUG 
-    getTypeFromSelectForm();
-    getNameFromTextArea();
-    getIdFromTextArea();
+    clear(); 
 
+    // Load JSON
+    let filteredData = await loadData(); 
+
+    // Apply filters in order
+    filteredData = applyTypeFilter(filteredData);
+    filteredData = applyIdFilter(filteredData); 
+    filteredData = applyNameFilter(filteredData); 
+
+    // Display results
+    appendTheResultsIntoTheBlackBox(filteredData);
 });
-
