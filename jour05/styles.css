@@ -1,0 +1,145 @@
+* { 
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* COLORS */
+:root {
+    --blue-light: rgba(80, 150, 255, 0.35);
+    --blue-strong: #4A90E2;
+    --white-soft: rgba(255, 255, 255, 0.8);
+    --border-light: rgba(255, 255, 255, 0.4);
+}
+
+/* PAGE */
+body {
+    background: linear-gradient(135deg, #ffffff, #297fff);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* HEADER */
+#header { 
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 25px;
+    margin-bottom: 30px;
+
+    background: var(--blue-light);
+    border: 2px solid var(--border-light);
+    border-radius: 15px;
+
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    margin-bottom : -25px;
+}
+
+#header span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #0d2a4d;
+}
+
+/* BUTTONS */
+.button { 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+
+    width: 220px;
+    padding: 18px;
+
+    font-size: 26px;
+    font-weight: 600;
+    text-decoration: none;
+
+    color: #0d2a4d;
+    background: var(--white-soft);
+
+    border-radius: 50px;
+    border: 2px solid var(--blue-strong);
+
+    transition: 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    margin-top : 20px;
+}
+
+.button:hover {
+    background: var(--blue-strong);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.small-button { 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+
+    width: 150px;
+    padding: 18px;
+
+    font-size : 20px;
+    font-weight: 600;
+
+    color: #0d2a4d;
+    background: var(--white-soft);
+
+    border-radius: 50px;
+    border: 2px solid var(--blue-strong);
+
+    transition: 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    margin-top : 20px;
+}
+
+.small-button:hover {
+    background: var(--blue-strong);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* HOME PAGE BUTTON CONTAINER */
+#buttons-container { 
+    width: 100%;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+/* HOME BUTTON CONTAINER */
+#home-button-container {
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+#home-button { 
+    width: 260px;
+}
+
+#signup-form-container {
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap : 10px; 
+
+}
+
+.form-area-text { 
+    font-size : 18px;
+}
+
+.confirmation-text { 
+    gap : -10px;
+    font-size : 10px; 
+}
